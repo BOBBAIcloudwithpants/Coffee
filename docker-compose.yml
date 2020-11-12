@@ -1,0 +1,21 @@
+version: '2'
+services:
+  mongo-container:
+    image: mongo:3.4
+    container_name: mongodb
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=123456
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./data/mongo:/data/db"
+      - "./data/mongo-entrypoint/:/docker-entrypoint-initdb.d/"
+    command: mongod
+  
+  coffee-container:
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "30070:30070"
